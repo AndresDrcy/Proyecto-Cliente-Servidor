@@ -1,4 +1,5 @@
 package org.example;
+//prueba
 
 public class Motocicleta extends Vehiculo {
     //Atributos especificos

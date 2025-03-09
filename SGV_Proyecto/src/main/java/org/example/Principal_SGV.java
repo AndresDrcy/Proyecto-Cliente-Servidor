@@ -1,8 +1,7 @@
 package org.example;
-
+//prueba repo
 
 import java.util.Date;
-//prueba de github
 
 public class Principal_SGV {
     public static void main(String[] args) {
