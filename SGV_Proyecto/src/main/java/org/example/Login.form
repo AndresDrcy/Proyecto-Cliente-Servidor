@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.Login">
+  <grid id="27dc6" binding="Login" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="true" same-size-vertically="true" hgap="-1" vgap="-1">
+    <margin top="40" left="80" bottom="40" right="80"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-13618627"/>
+    </properties>
+    <clientProperties>
+      <html.disable class="java.lang.Boolean" value="false"/>
+    </clientProperties>
+    <border type="line" title="Sistema de Venta de Vehiculos" title-justification="2">
+      <font name="Consolas" size="16"/>
+      <title-color color="-65547"/>
+      <color color="-2104859"/>
+    </border>
+    <children>
+      <component id="55f5d" class="javax.swing.JLabel" binding="UsuarioLB">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="18" style="1"/>
+          <foreground color="-65547"/>
+          <text value="Usuario"/>
+        </properties>
+      </component>
+      <component id="6f34f" class="javax.swing.JLabel" binding="ContraseñaLB">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="18" style="1"/>
+          <foreground color="-65547"/>
+          <text value="Contraseña"/>
+        </properties>
+      </component>
+      <component id="b44f" class="javax.swing.JPasswordField" binding="ContraseñaTXT">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="18"/>
+        </properties>
+      </component>
+      <component id="5c571" class="javax.swing.JTextField" binding="UsuarioTXT">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="18"/>
+        </properties>
+      </component>
+      <component id="3dc63" class="javax.swing.JButton" binding="SalirBtn">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-65547"/>
+          <font name="Consolas"/>
+          <text value="Salir"/>
+        </properties>
+      </component>
+      <component id="10815" class="javax.swing.JButton" binding="LoginBtn">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-65547"/>
+          <enabled value="true"/>
+          <font name="Consolas"/>
+          <text value="Login"/>
+        </properties>
+        <clientProperties>
+          <hideActionText class="java.lang.Boolean" value="false"/>
+          <html.disable class="java.lang.Boolean" value="false"/>
+        </clientProperties>
+      </component>
+    </children>
+  </grid>
+</form>
