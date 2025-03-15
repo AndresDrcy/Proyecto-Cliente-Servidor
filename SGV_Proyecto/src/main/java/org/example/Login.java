@@ -33,7 +33,7 @@ public class Login extends JFrame {
                 String password = ContraseñaTXT.getText();
 
                 //Validacion del login
-                if(user.equals("finanzas1")&& password.equals("1234")){
+                if(user.equals("ventas1")&& password.equals("1234")){
                     JOptionPane.showMessageDialog(null,"Ingreso Correcto, Bienvenido!");
                     autenticado = true;
                     //cerramos la ventana del menu
