@@ -1,9 +1,9 @@
-package org.example;
+package org.example.Cliente;
 
 public class Cliente {
     //Atributos
 
-    String nombre;
+    public String nombre;
     String documentoIdentidad;
     int edad;
     String telefono;
@@ -17,6 +17,7 @@ public class Cliente {
         this.telefono = telefono;
         this.correo = correo;
     }
+
 
     //Metodo de informacion
     public void mostrarInformacion(){

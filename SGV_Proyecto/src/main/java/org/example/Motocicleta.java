@@ -4,8 +4,8 @@ public class Motocicleta extends Vehiculo {
     int cilindrada;
 
 
-    public Motocicleta(String marca, String modelo, String color, int anno, double precio, int cilindrada) {
-        super(marca, modelo, color, anno, precio);
+    public Motocicleta(int id, String marca, String modelo, String color, int anno, double precio, int cilindrada, String tipo) {
+        super(id, marca, modelo, color, anno, precio, tipo);
         this.cilindrada = cilindrada;
     }
 

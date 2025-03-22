@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Login;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ public class Login extends JFrame {
         //Los siguientes metodos vienen de Jframe, no hay que incializar, son heredados
 
         setContentPane(Login); //Main panel del Java Swing, contenedor
-        setTitle("Login"); //Nombre de la Ventana
+        setTitle("org/example/Login"); //Nombre de la Ventana
         setDefaultCloseOperation(EXIT_ON_CLOSE); //cierre la ventana mediante alguna funcionalidad
         setSize(400,400); //Tamaño de la ventana
         setVisible(true); //ventana activa o inactiva

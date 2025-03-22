@@ -1,4 +1,7 @@
-package org.example;
+package org.example.Ventas;
+
+import org.example.Cliente.Cliente;
+import org.example.Vehiculo;
 
 import java.util.Date;
 

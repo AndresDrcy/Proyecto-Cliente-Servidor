@@ -1,4 +1,6 @@
-package org.example;
+package org.example.Inventarios;
+
+import org.example.Vehiculo;
 
 import java.util.ArrayList;
 import java.util.List;
