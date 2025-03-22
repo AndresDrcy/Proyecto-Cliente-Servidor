@@ -12,7 +12,7 @@ public class Principal_SGV {
 
         Login login = new Login(); // llamamos al login
 
-        // Esperamos hasta que el login sea exitoso
+        // Esperamos hasta que el login sea exitosov
         while (!login.esAutenticado()) { //la variable en login debe cambiar a true
             // Continuar mostrando la ventana de login hasta que el usuario se autentique
             try {

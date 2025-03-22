@@ -1,5 +1,7 @@
 package org.example.Inventarios;
 
+import org.example.Automovil;
+import org.example.Motocicleta;
 import org.example.Vehiculo;
 
 import javax.swing.*;
@@ -17,6 +19,8 @@ public class MostrarInventarios extends JFrame{
     private JLabel TituloInvent;
     private JScrollPane TablaTotal;
     private JButton Salir;
+    private JButton editarButton;
+    private JButton eliminarButton;
 
     public MostrarInventarios(ArrayList<Vehiculo> listaInventario) {
         this.listaInventario = listaInventario;
@@ -33,6 +37,76 @@ public class MostrarInventarios extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = TablaInvent.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    int tablaitem = TablaInvent.convertRowIndexToModel(filaSeleccionada);
+
+                    int confirmar = JOptionPane.showConfirmDialog(null,
+                            "Esta segura(o) de eliminar este registro?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+
+                    if (confirmar == JOptionPane.YES_OPTION) {
+                        listaInventario.remove(tablaitem);
+
+                        DefaultTableModel tabla = (DefaultTableModel) TablaInvent.getModel();
+                        tabla.removeRow(tablaitem);
+
+                        JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para eliminar.");
+                }
+            }
+        });
+
+
+        editarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = TablaInvent.getSelectedRow();
+
+                if (filaSeleccionada == -1) {
+                    JOptionPane.showMessageDialog(null, "Seleccione un vehículo para editar.");
+                    return;
+                }
+
+                int filaEnModelo = TablaInvent.convertRowIndexToModel(filaSeleccionada);
+                Vehiculo vehiculo = listaInventario.get(filaEnModelo);
+
+                try {
+                    String nuevaMarca = JOptionPane.showInputDialog("Nueva marca:", vehiculo.marca);
+                    String nuevoModelo = JOptionPane.showInputDialog("Nuevo modelo:", vehiculo.modelo);
+                    String nuevoColor = JOptionPane.showInputDialog("Nuevo color:", vehiculo.color);
+                    int nuevoAnno = Integer.parseInt(JOptionPane.showInputDialog("Nuevo año:", vehiculo.anno));
+                    double nuevoPrecio = Double.parseDouble(JOptionPane.showInputDialog("Nuevo precio:", vehiculo.precio));
+
+                    vehiculo.marca = nuevaMarca;
+                    vehiculo.modelo = nuevoModelo;
+                    vehiculo.color = nuevoColor;
+                    vehiculo.anno = nuevoAnno;
+                    vehiculo.precio = nuevoPrecio;
+
+                    // Refrescar tabla
+                    ((DefaultTableModel) TablaInvent.getModel()).removeRow(filaEnModelo);
+                    ((DefaultTableModel) TablaInvent.getModel()).insertRow(filaEnModelo, new Object[]{
+                            vehiculo.id,
+                            vehiculo.marca,
+                            vehiculo.modelo,
+                            vehiculo.color,
+                            vehiculo.anno,
+                            vehiculo.precio,
+                            vehiculo instanceof Automovil ? "Automovil" :
+                                    vehiculo instanceof Motocicleta ? "Motocicleta" : "Desconocido"
+                    });
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al editar. Verifique los datos.");
+                }
             }
         });
 
