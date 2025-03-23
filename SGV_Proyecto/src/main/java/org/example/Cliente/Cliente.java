@@ -4,7 +4,7 @@ public class Cliente {
     //Atributos
 
     public String nombre;
-    String documentoIdentidad;
+    public String documentoIdentidad;
     int edad;
     String telefono;
     String correo;

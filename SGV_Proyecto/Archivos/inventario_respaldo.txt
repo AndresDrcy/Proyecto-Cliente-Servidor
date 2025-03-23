@@ -1,0 +1,4 @@
+RESPALDO DE INVENTARIO:
+
+[Automovil] ID: 1 | Marca: toyota | Modelo: rav4 | Color: rojo | Año: 2018 | Precio: 28000.00
+

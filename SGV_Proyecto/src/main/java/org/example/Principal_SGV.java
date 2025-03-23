@@ -1,11 +1,6 @@
 package org.example;
-//prueba repo
-import org.example.Cliente.Cliente;
-import org.example.Inventarios.Inventario;
 import org.example.Login.Login;
 import org.example.Login.MenuPrincipal;
-
-import java.util.Date;
 
 public class Principal_SGV {
     public static void main(String[] args) {

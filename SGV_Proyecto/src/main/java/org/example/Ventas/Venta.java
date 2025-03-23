@@ -7,9 +7,11 @@ import java.util.Date;
 
 public class Venta {
     Cliente cliente;
+    String idCliente;
     Vehiculo vehiculo;
     Date fechaVenta;
     double montoTotal;
+    String terminoPago;
 
     //Constructor
     public Venta(Cliente cliente, Vehiculo vehiculo, Date fechaVenta, double montoTotal){

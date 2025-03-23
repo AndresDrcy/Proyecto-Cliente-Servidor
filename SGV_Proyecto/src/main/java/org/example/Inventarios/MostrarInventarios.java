@@ -9,6 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class MostrarInventarios extends JFrame{
@@ -21,6 +24,7 @@ public class MostrarInventarios extends JFrame{
     private JButton Salir;
     private JButton editarButton;
     private JButton eliminarButton;
+    private JButton respaldarEnServidorButton;
 
     public MostrarInventarios(ArrayList<Vehiculo> listaInventario) {
         this.listaInventario = listaInventario;
@@ -63,6 +67,44 @@ public class MostrarInventarios extends JFrame{
                 }
             }
         });
+
+        respaldarEnServidorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (listaInventario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay vehículos para respaldar.");
+                    return;
+                }
+
+                try {
+                    Socket socket = new Socket("localhost", 5700);
+                    PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
+
+                    //estructura para el archivo
+                    StringBuilder mensaje = new StringBuilder();
+                    mensaje.append("RESPALDO DE INVENTARIO:\n\n");
+
+                    for (Vehiculo v : listaInventario) {
+                        String tipo = (v instanceof org.example.Automovil) ? "Automovil" :
+                                (v instanceof org.example.Motocicleta) ? "Motocicleta" : "Desconocido";
+
+                        mensaje.append(String.format(
+                                "[%s] ID: %d | Marca: %s | Modelo: %s | Color: %s | Año: %d | Precio: %.2f\n",
+                                tipo, v.id, v.marca, v.modelo, v.color, v.anno, v.precio
+                        ));
+                    }
+
+                    // Enviar mensaje al servidor
+                    salida.println(mensaje.toString());
+                    socket.close();
+
+                    JOptionPane.showMessageDialog(null, "Inventario respaldado correctamente.");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "No se pudo conectar con el servidor.");
+                }
+            }
+        });
+
 
 
         editarButton.addActionListener(new ActionListener() {

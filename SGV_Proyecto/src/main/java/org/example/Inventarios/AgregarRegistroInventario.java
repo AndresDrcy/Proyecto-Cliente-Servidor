@@ -5,6 +5,8 @@ import org.example.Motocicleta;
 import org.example.Vehiculo;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AgregarRegistroInventario extends JFrame {
@@ -17,6 +19,7 @@ public class AgregarRegistroInventario extends JFrame {
     private JTextField añovehiculoFil;
     private JTextField preciovehiculoFil;
     private JComboBox listaTipojc;
+    private JButton salirButton;
 
 
     public AgregarRegistroInventario(ArrayList<Vehiculo> listaInventario) {
@@ -60,6 +63,13 @@ public class AgregarRegistroInventario extends JFrame {
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error en el formato de datos. Verifique los campos numéricos.");
+            }
+        });
+
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
 

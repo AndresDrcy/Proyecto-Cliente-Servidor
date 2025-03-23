@@ -13,16 +13,13 @@ public class InterfazInventarios extends JFrame{
     private JPanel PanelInventario;
     private JButton agregarRegistroButton;
     private JButton mostrarInventarioButton;
-    private JButton editarInventarioButton;
     private JButton salirButton;
 
 
-    public InterfazInventarios(){
-
-        listaInventario = new ArrayList<>();
+    public InterfazInventarios(ArrayList<Vehiculo> listaInventario) {
         setContentPane(PanelInventario);
-        setTitle("Menu Clientes"); //Nombre de la Ventana
-        setSize(400,400); //Tamaño de la ventana
+        setTitle("Menu Inventarios");
+        setSize(400, 400);
         setVisible(true);
 
         mostrarInventarioButton.addActionListener(new ActionListener() {
@@ -45,9 +42,6 @@ public class InterfazInventarios extends JFrame{
                 dispose();
             }
         });
-
     }
-
-
 
 }
