@@ -42,9 +42,35 @@ CREATE TABLE SGV_Proyecto.at_ventas (
 -- tabla de respaldo de del inventario
 CREATE TABLE SGV_Proyecto.at_inventarios_respaldo (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    contenido TEXT NOT NULL,
+    codigo_unico VARCHAR(20),
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    color VARCHAR(30),
+    anno INT,
+    precio DOUBLE,
+    tipo VARCHAR(20),
+    numero_puertas INT,
+    tiene_aire BOOLEAN,
+    cilindrada INT,
     fecha_respaldo DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+-- tabla para los usuarios del sistema
+DROP table SGV_Proyecto.at_usuarios;
+CREATE TABLE SGV_Proyecto.at_usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(100) NOT NULL,
+    rol VARCHAR(20) DEFAULT 'usuario'
+);
+
+-- inserts de prueba para usuarios
+INSERT INTO SGV_Proyecto.at_usuarios (usuario, contrasena, rol)
+VALUES 
+('ventas1', '1234', 'vendedor'),
+('admin', 'admin123', 'administrador'),
+('ventas2', '4567', 'vendedor');
+
 
 -- inserts de prueba para inventarios
 INSERT INTO SGV_Proyecto.at_inventarios 
@@ -76,4 +102,6 @@ INSERT INTO SGV_Proyecto.at_cliente
 
 select * from SGV_Proyecto.at_inventarios;
 select * from SGV_Proyecto.at_cliente;
+select * from SGV_Proyecto.at_ventas;
+select * from SGV_Proyecto.at_inventarios_respaldo;
 

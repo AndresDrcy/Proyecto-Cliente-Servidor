@@ -1,8 +1,11 @@
 package org.example.Login;
 
+import org.example.ConexionBD;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class Login extends JFrame {
     private JPanel Login;
@@ -14,49 +17,65 @@ public class Login extends JFrame {
     private JButton SalirBtn;
     private boolean autenticado = false;
 
-    //1- constructor inicializa la clase
-    public Login(){
-        //Los siguientes metodos vienen de Jframe, no hay que incializar, son heredados
+    public Login() {
+        setContentPane(Login);
+        setTitle("Login");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 400);
+        setVisible(true);
 
-        setContentPane(Login); //Main panel del Java Swing, contenedor
-        setTitle("org/example/Login"); //Nombre de la Ventana
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //cierre la ventana mediante alguna funcionalidad
-        setSize(400,400); //Tamaño de la ventana
-        setVisible(true); //ventana activa o inactiva
-
-        //PRIMER EVENTO click en login botton (con usuario y contraseña)
         LoginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Aca va_todo lo que se ejecuta a la hora del click
-                String user = UsuarioTXT.getText();
-                String password = ContraseñaTXT.getText();
+                String usuario = UsuarioTXT.getText();
+                String contrasena = new String(ContraseñaTXT.getPassword());
 
-                //Validacion del login
-                if(user.equals("ventas1")&& password.equals("1234")){
-                    JOptionPane.showMessageDialog(null,"Ingreso Correcto, Bienvenido!");
+                // Validar contra la base de datos
+                if (validarCredenciales(usuario, contrasena)) {
+                    JOptionPane.showMessageDialog(null, "✅ Ingreso correcto, ¡bienvenido!");
                     autenticado = true;
-                    //cerramos la ventana del menu
                     dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null,"Verifique sus Credenciales");
+                } else {
+                    JOptionPane.showMessageDialog(null, "⚠️ Verifique sus credenciales.");
                     autenticado = false;
                 }
             }
         });
 
-        //SEGUNDO EVENTO Salir de la interfaz
         SalirBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-
     }
-    // Método_para obtener el estado de autenticación
+
     public boolean esAutenticado() {
         return autenticado;
     }
 
+    private boolean validarCredenciales(String usuario, String contrasena) {
+        ConexionBD conexion = new ConexionBD();
+        conexion.setConexion();
+
+        try {
+            String sql = "SELECT * FROM at_usuarios WHERE usuario = ? AND contrasena = ?";
+            conexion.setConsulta(sql);
+            conexion.getConsulta().setString(1, usuario);
+            conexion.getConsulta().setString(2, contrasena);
+
+            ResultSet rs = conexion.getResultado();
+
+            if (rs.next()) {
+                return true; // Usuario encontrado
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar credenciales: " + ex.getMessage());
+        } finally {
+            conexion.cerrarConexion();
+        }
+
+        return false;
+    }
 }
