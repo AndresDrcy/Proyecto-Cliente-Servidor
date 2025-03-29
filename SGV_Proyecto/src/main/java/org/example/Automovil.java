@@ -6,8 +6,8 @@ public class Automovil extends Vehiculo{
     int numeroPuertas;
     boolean tieneAireAcondicionado;
     //Constructor
-    public Automovil(int id,String marca, String modelo, String color, int anno, double precio, int numeroPuertas, boolean tieneAireAcondicionado, String tipo) {
-        super(id,marca, modelo, color, anno, precio, tipo);
+    public Automovil(String marca, String modelo, String color, int anno, double precio, int numeroPuertas, boolean tieneAireAcondicionado, String tipo) {
+        super(marca, modelo, color, anno, precio, tipo);
         this.numeroPuertas = numeroPuertas;
         this.tieneAireAcondicionado = tieneAireAcondicionado;
     }

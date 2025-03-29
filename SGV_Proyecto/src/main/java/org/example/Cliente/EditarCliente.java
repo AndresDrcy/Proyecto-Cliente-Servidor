@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class EditarCliente extends JFrame{
     private JPanel editarPanel;
 
-    public EditarCliente(ArrayList<Cliente> listaClientes) {
+    public EditarCliente() {
         setContentPane(editarPanel);
         setTitle("Menu Clientes"); //Nombre de la Ventana
         setSize(400,400); //Tamaño de la ventana

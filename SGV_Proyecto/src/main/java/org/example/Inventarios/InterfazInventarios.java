@@ -1,38 +1,33 @@
 package org.example.Inventarios;
 
-import org.example.Vehiculo;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class InterfazInventarios extends JFrame{
+public class InterfazInventarios extends JFrame {
 
-    private ArrayList<Vehiculo> listaInventario;
     private JPanel PanelInventario;
     private JButton agregarRegistroButton;
     private JButton mostrarInventarioButton;
     private JButton salirButton;
 
-
-    public InterfazInventarios(ArrayList<Vehiculo> listaInventario) {
+    public InterfazInventarios() {
         setContentPane(PanelInventario);
-        setTitle("Menu Inventarios");
+        setTitle("Menú Inventarios");
         setSize(400, 400);
         setVisible(true);
 
         mostrarInventarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MostrarInventarios mostrarInventarios = new MostrarInventarios(listaInventario);
+                MostrarInventarios mostrarInventarios = new MostrarInventarios(); // ← ya no necesita lista
             }
         });
 
         agregarRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AgregarRegistroInventario agregarRegistroInventario = new AgregarRegistroInventario(listaInventario);
+                AgregarRegistroInventario agregarRegistroInventario = new AgregarRegistroInventario(); // ← ya no necesita lista
             }
         });
 
@@ -43,5 +38,5 @@ public class InterfazInventarios extends JFrame{
             }
         });
     }
-
 }
+

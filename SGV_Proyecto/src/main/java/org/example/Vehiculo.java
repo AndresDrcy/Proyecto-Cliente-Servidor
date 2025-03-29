@@ -1,8 +1,9 @@
 package org.example;
 
+import java.util.UUID;
+
 public abstract class Vehiculo {
     //Atributos
-    public int id;
     public String marca;
     public String modelo;
     public String color;
@@ -11,8 +12,7 @@ public abstract class Vehiculo {
     public String tipo;
 
     // Constructor
-    public Vehiculo(int id, String marca, String modelo, String color, int anno, double precio, String tipo) {
-        this.id = id;
+    public Vehiculo(String marca, String modelo, String color, int anno, double precio, String tipo) {
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
@@ -20,6 +20,7 @@ public abstract class Vehiculo {
         this.precio = precio;
         this.tipo = tipo;
     }
+
 
     //Metodos Abstractos
     public abstract void mostrarDetalles();

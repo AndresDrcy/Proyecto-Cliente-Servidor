@@ -3,11 +3,9 @@ package org.example.Cliente;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class InterfazCliente extends JFrame {
 
-    ArrayList<Cliente> listaClientes = new ArrayList<>();
     private JPanel menuClientesPanel;
     private JLabel menuDeClientesLabel;
     private JButton agregarClienteButton;
@@ -18,32 +16,30 @@ public class InterfazCliente extends JFrame {
     public InterfazCliente() {
 
         setContentPane(menuClientesPanel);
-        setTitle("Menu Clientes"); //Nombre de la Ventana
-        setSize(400,400); //Tamaño de la ventana
+        setTitle("Menú Clientes");
+        setSize(400, 400);
         setVisible(true);
 
         agregarClienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                AgregarCliente menuAgregar = new AgregarCliente(listaClientes);
+                AgregarCliente menuAgregar = new AgregarCliente();
             }
         });
+
         mostrarClientesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("MOSTRAR");
-                MostrarCliente mostrarCliente = new MostrarCliente(listaClientes);
-            }
-        });
-        editarClientesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("EDITAR");
-                EditarCliente editarCliente = new EditarCliente(listaClientes);
+                MostrarCliente mostrarCliente = new MostrarCliente(); // ← Esta clase debe leer directamente desde SQL
             }
         });
 
+        editarClientesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EditarCliente editarCliente = new EditarCliente(); // ← Y esta también
+            }
+        });
 
         salirButton.addActionListener(new ActionListener() {
             @Override

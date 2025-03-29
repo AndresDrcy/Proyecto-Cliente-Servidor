@@ -1,9 +1,10 @@
-// Clase para el servidor
 package org.example;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.PreparedStatement;
 
 public class Servidor extends Thread {
 
@@ -13,10 +14,9 @@ public class Servidor extends Thread {
             System.out.println("Servidor activo en puerto 5700...");
 
             while (true) {
-                Socket socket = serverSocket.accept(); // aqui esperamos la conexion
+                Socket socket = serverSocket.accept();
                 BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                // Leer todo el mensaje enviado por el cliente
                 StringBuilder mensaje = new StringBuilder();
                 String linea;
                 while ((linea = entrada.readLine()) != null) {
@@ -24,28 +24,31 @@ public class Servidor extends Thread {
                 }
 
                 System.out.println("Inventario recibido:\n" + mensaje);
-                guardarEnArchivo(mensaje.toString());
+                guardarEnBaseDeDatos(mensaje.toString());
 
-                socket.close(); // cerramos
+                socket.close();
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Error en el servidor: " + e.getMessage());
         }
     }
 
-    private void guardarEnArchivo(String contenido) {
+    private void guardarEnBaseDeDatos(String contenido) {
         try {
+            ConexionBD conexionBD = new ConexionBD();
+            conexionBD.setConexion();
 
-            String ruta = "SGV_Proyecto/Archivos/inventario_respaldo.txt";
+            String sql = "INSERT INTO at_inventarios_respaldo (contenido) VALUES (?)";
+            conexionBD.setConsulta(sql);
+            PreparedStatement ps = conexionBD.getConsulta();
+            ps.setString(1, contenido);
+            ps.executeUpdate();
 
-            FileWriter fw = new FileWriter(ruta, false); // false = sobrescribir
-            fw.write(contenido);
-            fw.close();
-
-            System.out.println("Inventario respaldado en: " + ruta);
-        } catch (IOException e) {
-            System.out.println("No se pudo guardar el archivo: " + e.getMessage());
+            conexionBD.cerrarConexion();
+            System.out.println("Inventario respaldado en tabla at_inventarios_respaldo.");
+        } catch (Exception e) {
+            System.out.println("No se pudo guardar el respaldo en base de datos: " + e.getMessage());
         }
     }
 }

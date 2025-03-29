@@ -4,10 +4,11 @@ public class Motocicleta extends Vehiculo {
     int cilindrada;
 
 
-    public Motocicleta(int id, String marca, String modelo, String color, int anno, double precio, int cilindrada, String tipo) {
-        super(id, marca, modelo, color, anno, precio, tipo);
+    public Motocicleta(String marca, String modelo, String color, int anno, double precio, int cilindrada, String tipo) {
+        super(marca, modelo, color, anno, precio, tipo);
         this.cilindrada = cilindrada;
     }
+
 
     //Metodos Abstractos
     @Override

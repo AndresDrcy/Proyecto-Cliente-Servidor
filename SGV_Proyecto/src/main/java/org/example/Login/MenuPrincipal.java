@@ -45,7 +45,7 @@ public class MenuPrincipal extends JFrame {
     Ventabtn.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InterfazVentas interfazVentas = new InterfazVentas(listaVentas, listaClientes, listaInventario);
+            InterfazVentas interfazVentas = new InterfazVentas();
 
         }
     });
@@ -53,7 +53,7 @@ public class MenuPrincipal extends JFrame {
     Inventariosbtn.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InterfazInventarios inventarioVentana = new InterfazInventarios(listaInventario);
+            InterfazInventarios inventarioVentana = new InterfazInventarios();
         }
     });
 

@@ -3,15 +3,16 @@ package org.example.Inventarios;
 import org.example.Automovil;
 import org.example.Motocicleta;
 import org.example.Vehiculo;
+import org.example.ConexionBD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class AgregarRegistroInventario extends JFrame {
     private JPanel PanelAgregar;
-    private JTextField idvehiculoFil;
     private JButton agregarAlInventarioButton;
     private JTextField marcavehiculoFil;
     private JTextField modelovehiculoFil;
@@ -22,47 +23,72 @@ public class AgregarRegistroInventario extends JFrame {
     private JButton salirButton;
 
 
-    public AgregarRegistroInventario(ArrayList<Vehiculo> listaInventario) {
+    public AgregarRegistroInventario() {
         setContentPane(PanelAgregar);
-        setTitle("Agregar Registros Inventarios"); // Nombre de la Ventana
-        setSize(400, 400); // Tamaño de la ventana
+        setTitle("Agregar Registros Inventarios");
+        setSize(400, 400);
         setVisible(true);
 
-        agregarAlInventarioButton.addActionListener(e -> {
-            try {
-                int id = Integer.parseInt(idvehiculoFil.getText());
-                String marca = marcavehiculoFil.getText();
-                String modelo = modelovehiculoFil.getText();
-                String color = colorvehiculoFil.getText();
-                int anno = Integer.parseInt(añovehiculoFil.getText());
-                double precio = Double.parseDouble(preciovehiculoFil.getText());
-                String tipo = listaTipojc.getSelectedItem().toString();
+        agregarAlInventarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    // Conectamos a la base de datos
+                    ConexionBD conexionBD = new ConexionBD();
+                    conexionBD.setConexion();
 
-                Vehiculo nuevoVehiculo;
+                    String marca = marcavehiculoFil.getText();
+                    String modelo = modelovehiculoFil.getText();
+                    String color = colorvehiculoFil.getText();
+                    int anno = Integer.parseInt(añovehiculoFil.getText());
+                    double precio = Double.parseDouble(preciovehiculoFil.getText());
+                    String tipo = listaTipojc.getSelectedItem().toString();
+                    String codigoUnico = generarCodigoUnico();
 
-                if (tipo.equalsIgnoreCase("Automovil")) {
-                    // Podés pedir número de puertas y si tiene aire en campos adicionales
-                    int numeroPuertas = Integer.parseInt(JOptionPane.showInputDialog("Número de puertas:"));
-                    boolean tieneAire = JOptionPane.showConfirmDialog(null, "¿Tiene aire acondicionado?", "Aire Acondicionado",
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    String sql = "INSERT INTO at_inventarios (codigo_unico, marca, modelo, color, anno, precio, tipo, numero_puertas, tiene_aire, cilindrada) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    conexionBD.setConsulta(sql);
+                    PreparedStatement conexion = conexionBD.getConsulta();
 
-                    nuevoVehiculo = new Automovil(id, marca, modelo, color, anno, precio, numeroPuertas, tieneAire, tipo);
+                    conexion.setString(1, codigoUnico);
+                    conexion.setString(2, marca);
+                    conexion.setString(3, modelo);
+                    conexion.setString(4, color);
+                    conexion.setInt(5, anno);
+                    conexion.setDouble(6, precio);
+                    conexion.setString(7, tipo);
 
-                } else if (tipo.equalsIgnoreCase("Motocicleta")) {
-                    int cilindrada = Integer.parseInt(JOptionPane.showInputDialog("Cilindrada (cc):"));
-                    nuevoVehiculo = new Motocicleta(id, marca, modelo, color, anno, precio, cilindrada, tipo);
+                    if (tipo.equalsIgnoreCase("Automovil")) {
+                        int numeroPuertas = Integer.parseInt(JOptionPane.showInputDialog("Número de puertas:"));
+                        boolean tieneAire = JOptionPane.showConfirmDialog(null, "Tiene aire acondicionado?", "Aire Acondicionado",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Tipo de vehículo no reconocido.");
-                    return;
+                        conexion.setInt(8, numeroPuertas);
+                        conexion.setBoolean(9, tieneAire);
+                        conexion.setNull(10, java.sql.Types.INTEGER);
+                    } else if (tipo.equalsIgnoreCase("Motocicleta")) {
+                        int cilindrada = Integer.parseInt(JOptionPane.showInputDialog("Cilindrada (cc):"));
+                        conexion.setNull(8, java.sql.Types.INTEGER);
+                        conexion.setNull(9, java.sql.Types.BOOLEAN);
+                        conexion.setInt(10, cilindrada);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Tipo de vehículo no reconocido.");
+                        conexionBD.cerrarConexion();
+                        return;
+                    }
+
+                    conexion.executeUpdate();
+                    conexionBD.cerrarConexion();
+
+                    JOptionPane.showMessageDialog(null, tipo + " registrada correctamente en la base de datos.");
+                    dispose();
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Error en el formato de datos. Verifique los campos numéricos.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
+                    ex.printStackTrace();
                 }
-
-                listaInventario.add(nuevoVehiculo);
-                JOptionPane.showMessageDialog(null, tipo + " registrada correctamente.");
-                dispose();
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Error en el formato de datos. Verifique los campos numéricos.");
             }
         });
 
@@ -72,8 +98,11 @@ public class AgregarRegistroInventario extends JFrame {
                 dispose();
             }
         });
+    }
 
-
+//aqui se genera un codigo unico, usando UUID para que genere un numero random de 8 digitos todos en mayuscula
+    private String generarCodigoUnico() {
+        return "VH-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 
 }
