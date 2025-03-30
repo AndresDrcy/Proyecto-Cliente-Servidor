@@ -20,14 +20,14 @@ public class InterfazInventarios extends JFrame {
         mostrarInventarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MostrarInventarios mostrarInventarios = new MostrarInventarios(); // ← ya no necesita lista
+                MostrarInventarios mostrarInventarios = new MostrarInventarios();
             }
         });
 
         agregarRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AgregarRegistroInventario agregarRegistroInventario = new AgregarRegistroInventario(); // ← ya no necesita lista
+                AgregarRegistroInventario agregarRegistroInventario = new AgregarRegistroInventario();
             }
         });
 

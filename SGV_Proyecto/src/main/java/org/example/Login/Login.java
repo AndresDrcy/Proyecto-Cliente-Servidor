@@ -30,13 +30,13 @@ public class Login extends JFrame {
                 String usuario = UsuarioTXT.getText();
                 String contrasena = new String(ContraseñaTXT.getPassword());
 
-                // Validar contra la base de datos
+                //se aplica la revision en la BD
                 if (validarCredenciales(usuario, contrasena)) {
-                    JOptionPane.showMessageDialog(null, "✅ Ingreso correcto, ¡bienvenido!");
+                    JOptionPane.showMessageDialog(null, "Ingreso correcto, bienvenido.");
                     autenticado = true;
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "⚠️ Verifique sus credenciales.");
+                    JOptionPane.showMessageDialog(null, "Verifique sus credenciales");
                     autenticado = false;
                 }
             }
@@ -59,14 +59,14 @@ public class Login extends JFrame {
         conexion.setConexion();
 
         try {
-            String sql = "SELECT * FROM at_usuarios WHERE usuario = ? AND contrasena = ?";
-            conexion.setConsulta(sql);
+            String consulta = "SELECT * FROM at_usuarios WHERE usuario = ? AND contrasena = ?";
+            conexion.setConsulta(consulta);
             conexion.getConsulta().setString(1, usuario);
             conexion.getConsulta().setString(2, contrasena);
 
-            ResultSet rs = conexion.getResultado();
+            ResultSet resultadoUS = conexion.getResultado();
 
-            if (rs.next()) {
+            if (resultadoUS.next()) {
                 return true; // Usuario encontrado
             }
 
