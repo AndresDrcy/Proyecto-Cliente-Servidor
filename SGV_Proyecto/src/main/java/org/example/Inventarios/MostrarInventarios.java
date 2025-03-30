@@ -1,17 +1,11 @@
 package org.example.Inventarios;
 
-import org.example.ConexionBD;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.RowFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
 
 
 
@@ -26,6 +20,8 @@ public class MostrarInventarios extends JFrame {
     private JButton editarButton;
     private JButton eliminarButton;
     private JButton respaldarEnServidorButton;
+
+    private final Inventario inventario = new Inventario();
 
     public MostrarInventarios() {
         setContentPane(InterfazInventario);
@@ -49,24 +45,12 @@ public class MostrarInventarios extends JFrame {
                 int filaSeleccionada = TablaInvent.getSelectedRow();
                 if (filaSeleccionada != -1) {
                     int idVehiculo = (int) TablaInvent.getValueAt(filaSeleccionada, 0);
-
                     int confirmar = JOptionPane.showConfirmDialog(null,
-                            "Esta seguro de eliminar este registro?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+                            "Está seguro de eliminar este registro?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
                     if (confirmar == JOptionPane.YES_OPTION) {
-                        ConexionBD conexion = new ConexionBD();
-                        conexion.setConexion();
-                        try {
-                            conexion.setConsulta("DELETE FROM at_inventarios WHERE id = ?");
-                            conexion.getConsulta().setInt(1, idVehiculo);
-                            conexion.getConsulta().executeUpdate();
-                            JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente.");
-                            cargarDatosEnTabla();
-                        } catch (SQLException ex) {
-                            JOptionPane.showMessageDialog(null, "Error al eliminar el vehículo");
-                        } finally {
-                            conexion.cerrarConexion();
-                        }
+                        inventario.eliminarVehiculo(idVehiculo);
+                        cargarDatosEnTabla();
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para eliminar");
@@ -77,18 +61,7 @@ public class MostrarInventarios extends JFrame {
         respaldarEnServidorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Socket socket = new Socket("localhost", 5700);
-                    socket.getOutputStream().write("RESPALDAR\n".getBytes());
-                    socket.getOutputStream().flush();//el flush fuerza el envio de la peticion, asi no dura tanto
-                    socket.close();
-
-                    JOptionPane.showMessageDialog(null, "Solicitud de respaldo enviada al servidor");
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "No se pudo contactar al servidor");
-                    ex.printStackTrace();
-                }
+                inventario.solicitarRespaldoAlServidor();
             }
         });
 
@@ -108,6 +81,7 @@ public class MostrarInventarios extends JFrame {
                 String colorActual = (String) TablaInvent.getValueAt(filaSeleccionada, 3);
                 int annoActual = (int) TablaInvent.getValueAt(filaSeleccionada, 4);
                 double precioActual = (double) TablaInvent.getValueAt(filaSeleccionada, 5);
+                String tipoActual = (String) TablaInvent.getValueAt(filaSeleccionada, 6);
 
                 try {
                     String nuevaMarca = JOptionPane.showInputDialog("Nueva marca:", marcaActual);
@@ -115,23 +89,13 @@ public class MostrarInventarios extends JFrame {
                     String nuevoColor = JOptionPane.showInputDialog("Nuevo color:", colorActual);
                     int nuevoAnno = Integer.parseInt(JOptionPane.showInputDialog("Nuevo año:", annoActual));
                     double nuevoPrecio = Double.parseDouble(JOptionPane.showInputDialog("Nuevo precio:", precioActual));
+                    String nuevoTipo= JOptionPane.showInputDialog("Nuevo tipo:", tipoActual);
 
-                    ConexionBD conexion = new ConexionBD();
-                    conexion.setConexion();
-                    conexion.setConsulta("UPDATE at_inventarios SET marca = ?, modelo = ?, color = ?, anno = ?, precio = ? WHERE id = ?");
-                    conexion.getConsulta().setString(1, nuevaMarca);
-                    conexion.getConsulta().setString(2, nuevoModelo);
-                    conexion.getConsulta().setString(3, nuevoColor);
-                    conexion.getConsulta().setInt(4, nuevoAnno);
-                    conexion.getConsulta().setDouble(5, nuevoPrecio);
-                    conexion.getConsulta().setInt(6, idVehiculo);
-                    conexion.getConsulta().executeUpdate();
-
-                    JOptionPane.showMessageDialog(null, "Vehículo actualizado correctamente");
+                    inventario.editarVehiculo(idVehiculo, nuevaMarca, nuevoModelo, nuevoColor, nuevoAnno, nuevoPrecio, tipoActual);
                     cargarDatosEnTabla();
 
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error al editar. Verifique los datos");
+                    JOptionPane.showMessageDialog(null, "Error al editar. Verifique los datos.");
                 }
             }
         });
@@ -168,30 +132,6 @@ public class MostrarInventarios extends JFrame {
 
     public void cargarDatosEnTabla() {
         DefaultTableModel modelo = (DefaultTableModel) TablaInvent.getModel();
-        modelo.setRowCount(0); // Limpiar
-
-        ConexionBD conexion = new ConexionBD();
-        conexion.setConexion();
-
-        try {
-            conexion.setConsulta("SELECT * FROM at_inventarios");
-            ResultSet rs = conexion.getResultado();
-
-            while (rs.next()) {
-                modelo.addRow(new Object[]{
-                        rs.getInt("id"),
-                        rs.getString("marca"),
-                        rs.getString("modelo"),
-                        rs.getString("color"),
-                        rs.getInt("anno"),
-                        rs.getDouble("precio"),
-                        rs.getString("tipo")
-                });
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos");
-        } finally {
-            conexion.cerrarConexion();
-        }
+        inventario.cargarVehiculosEnTabla(modelo);
     }
 }
