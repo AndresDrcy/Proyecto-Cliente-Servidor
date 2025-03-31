@@ -10,34 +10,26 @@ public class InterfazCliente extends JFrame {
     private JLabel menuDeClientesLabel;
     private JButton agregarClienteButton;
     private JButton mostrarClientesButton;
-    private JButton editarClientesButton;
     private JButton salirButton;
 
     public InterfazCliente() {
-
         setContentPane(menuClientesPanel);
-        setTitle("Menú Clientes");
+        setTitle("Menú de Clientes");
         setSize(400, 400);
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         agregarClienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AgregarCliente menuAgregar = new AgregarCliente();
+                new AgregarCliente();
             }
         });
 
         mostrarClientesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MostrarCliente mostrarCliente = new MostrarCliente(); // ← Esta clase debe leer directamente desde SQL
-            }
-        });
-
-        editarClientesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EditarCliente editarCliente = new EditarCliente(); // ← Y esta también
+                new MostrarCliente();
             }
         });
 

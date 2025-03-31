@@ -1,13 +1,10 @@
 package org.example.Cliente;
 
-import org.example.ConexionBD;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.sql.PreparedStatement;
 
 public class AgregarCliente extends JFrame {
     private JTextField nombreTextField;
@@ -17,64 +14,67 @@ public class AgregarCliente extends JFrame {
     private JTextField correoMailComTextField;
     private JButton agregarRegistroButton;
     private JPanel panel;
+    private JButton salirButton;
 
     public AgregarCliente() {
         setContentPane(panel);
-        setTitle("Menu Clientes");
+        setTitle("Agregar Cliente");
         setSize(400, 400);
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         agregarRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombre = nombreTextField.getText();
-                String documento = DNITextField.getText();
-                int edad = Integer.parseInt(edadTextField.getText());
-                String telefono = telefonoTextField.getText();
-                String correo = correoMailComTextField.getText();
-
                 try {
-                    ConexionBD conexionBD = new ConexionBD();
-                    conexionBD.setConexion();
+                    String nombre = nombreTextField.getText();
+                    String documento = DNITextField.getText();
+                    int edad = Integer.parseInt(edadTextField.getText());
+                    String telefono = telefonoTextField.getText();
+                    String correo = correoMailComTextField.getText();
 
-                    String sql = "INSERT INTO at_cliente (documento_identidad, nombre, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)";
-                    conexionBD.setConsulta(sql);
-                    PreparedStatement consulta = conexionBD.getConsulta();
+                    Cliente nuevoCliente = new Cliente(nombre, documento, edad, telefono, correo);
 
-                    consulta.setString(1, documento);
-                    consulta.setString(2, nombre);
-                    consulta.setInt(3, edad);
-                    consulta.setString(4, telefono);
-                    consulta.setString(5, correo);
-
-                    consulta.executeUpdate();
-                    conexionBD.cerrarConexion();
-
-                    JOptionPane.showMessageDialog(null, "cliente " + nombre + " registrado en la base de datos.");
-                    dispose();
-
+                    if (nuevoCliente.registrarCliente()) {
+                        JOptionPane.showMessageDialog(null, "Cliente " + nombre + " registrado correctamente");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al registrar cliente");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Error: Verifique los campos numéricos");
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "error al registrar cliente: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
                     ex.printStackTrace();
                 }
             }
         });
 
-        // Limpieza de campos al hacer foco
-        nombreTextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) { nombreTextField.setText(""); }
+        salirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
         });
-        DNITextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) { DNITextField.setText(""); }
-        });
-        edadTextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) { edadTextField.setText(""); }
-        });
-        telefonoTextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) { telefonoTextField.setText(""); }
-        });
-        correoMailComTextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) { correoMailComTextField.setText(""); }
-        });
+
+        // Limpiar los campos al enfocar
+        nombreTextField.addFocusListener(new ClearFieldOnFocus(nombreTextField));
+        DNITextField.addFocusListener(new ClearFieldOnFocus(DNITextField));
+        edadTextField.addFocusListener(new ClearFieldOnFocus(edadTextField));
+        telefonoTextField.addFocusListener(new ClearFieldOnFocus(telefonoTextField));
+        correoMailComTextField.addFocusListener(new ClearFieldOnFocus(correoMailComTextField));
+    }
+
+    private static class ClearFieldOnFocus extends FocusAdapter {
+        private final JTextField textField;
+
+        public ClearFieldOnFocus(JTextField textField) {
+            this.textField = textField;
+        }
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            textField.setText("");
+        }
     }
 }
