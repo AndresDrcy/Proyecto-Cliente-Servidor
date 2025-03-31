@@ -33,10 +33,7 @@ CREATE TABLE SGV_Proyecto.at_ventas (
     codigo_vehiculo VARCHAR(20) NOT NULL,
     fecha_venta DATETIME NOT NULL,
     monto_total DOUBLE NOT NULL,
-    termino_pago VARCHAR(30) NOT NULL,
-
-    FOREIGN KEY (documento_cliente) REFERENCES at_cliente(documento_identidad),
-    FOREIGN KEY (codigo_vehiculo) REFERENCES at_inventarios(codigo_unico)
+    termino_pago VARCHAR(30) NOT NULL
 );
 
 -- tabla de respaldo de del inventario
