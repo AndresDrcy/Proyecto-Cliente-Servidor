@@ -53,7 +53,6 @@ CREATE TABLE SGV_Proyecto.at_inventarios_respaldo (
 );
 
 -- tabla para los usuarios del sistema
-DROP table SGV_Proyecto.at_usuarios;
 CREATE TABLE SGV_Proyecto.at_usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(50) NOT NULL UNIQUE,

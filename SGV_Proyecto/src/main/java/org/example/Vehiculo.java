@@ -25,5 +25,6 @@ public abstract class Vehiculo {
     //Metodos Abstractos
     public abstract void mostrarDetalles();
     public abstract double calcularImpuesto();
+    public abstract String generarCodigoUnico();
 }
 

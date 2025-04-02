@@ -12,11 +12,10 @@ import java.sql.SQLException;
 public class MostrarCliente extends JFrame {
 
     private JPanel InterfazMostrarCliente;
-    private JButton editarButton;
-    private JButton eliminarButton;
-    private JButton salirButton;
+    private JButton EditarButton;
+    private JButton EliminarButton;
+    private JButton SalirButton;
     private JTable TablaClientes;
-    private JPanel TituloClientes;
 
     public MostrarCliente() {
         setContentPane(InterfazMostrarCliente);
@@ -28,9 +27,9 @@ public class MostrarCliente extends JFrame {
         crearTabla();
         cargarDatosDesdeBD();
 
-        salirButton.addActionListener(e -> dispose());
+        SalirButton.addActionListener(e -> dispose());
 
-        eliminarButton.addActionListener(new ActionListener() {
+        EliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int filaSeleccionada = TablaClientes.getSelectedRow();
@@ -60,7 +59,7 @@ public class MostrarCliente extends JFrame {
         });
 
 
-        editarButton.addActionListener(new ActionListener() {
+        EditarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int filaSeleccionada = TablaClientes.getSelectedRow();

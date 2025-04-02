@@ -39,7 +39,7 @@ public class Venta {
             ResultSet resultado = buscar.executeQuery();
 
             if (!resultado.next()) {
-                System.out.println("Vehículo no encontrado en inventario.");
+                System.out.println("Vehículo no encontrado en inventario");
                 return false;
             }
 

@@ -30,26 +30,26 @@ public class Automovil extends Vehiculo{
         ConexionBD conexion = new ConexionBD();
         conexion.setConexion();
 
-        String sql = "INSERT INTO at_inventarios (codigo_unico, marca, modelo, color, anno, precio, tipo, numero_puertas, tiene_aire) " +
+        String consulta = "INSERT INTO at_inventarios (codigo_unico, marca, modelo, color, anno, precio, tipo, numero_puertas, tiene_aire) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        conexion.setConsulta(sql);
-        PreparedStatement ps = conexion.getConsulta();
-        ps.setString(1, generarCodigoUnico());
-        ps.setString(2, marca);
-        ps.setString(3, modelo);
-        ps.setString(4, color);
-        ps.setInt(5, anno);
-        ps.setDouble(6, precio);
-        ps.setString(7, tipo);
-        ps.setInt(8, numeroPuertas);
-        ps.setBoolean(9, tieneAireAcondicionado);
+        conexion.setConsulta(consulta);
+        PreparedStatement consultaResultado = conexion.getConsulta();
+        consultaResultado.setString(1, generarCodigoUnico());
+        consultaResultado.setString(2, marca);
+        consultaResultado.setString(3, modelo);
+        consultaResultado.setString(4, color);
+        consultaResultado.setInt(5, anno);
+        consultaResultado.setDouble(6, precio);
+        consultaResultado.setString(7, tipo);
+        consultaResultado.setInt(8, numeroPuertas);
+        consultaResultado.setBoolean(9, tieneAireAcondicionado);
 
-        ps.executeUpdate();
+        consultaResultado.executeUpdate();
         conexion.cerrarConexion();
     }
 
-    private String generarCodigoUnico() {
+    public String generarCodigoUnico() {
         return "VH-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 }
