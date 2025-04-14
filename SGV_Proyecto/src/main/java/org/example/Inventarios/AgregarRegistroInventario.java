@@ -22,7 +22,8 @@ public class AgregarRegistroInventario extends JFrame {
     public AgregarRegistroInventario() {
         setContentPane(PanelAgregar);
         setTitle("Agregar Registros Inventarios");
-        setSize(400, 400);
+        setSize(600, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 
         agregarAlInventarioButton.addActionListener(new ActionListener() {

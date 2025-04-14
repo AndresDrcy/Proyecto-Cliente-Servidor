@@ -70,8 +70,8 @@ public class Inventario {
             resultadoActualizar.setString(3, nuevoColor);
             resultadoActualizar.setInt(4, nuevoAnno);
             resultadoActualizar.setDouble(5, nuevoPrecio);
-            resultadoActualizar.setInt(6, idVehiculo);
-            resultadoActualizar.setString(7, tipoActual);
+            resultadoActualizar.setString(6, tipoActual);
+            resultadoActualizar.setInt(7,idVehiculo);
             resultadoActualizar.executeUpdate();
             JOptionPane.showMessageDialog(null, "Vehículo actualizado correctamente");
         } catch (Exception e) {

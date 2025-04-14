@@ -14,7 +14,8 @@ public class InterfazInventarios extends JFrame {
     public InterfazInventarios() {
         setContentPane(PanelInventario);
         setTitle("Menú Inventarios");
-        setSize(400, 400);
+        setSize(600, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 
         mostrarInventarioButton.addActionListener(new ActionListener() {

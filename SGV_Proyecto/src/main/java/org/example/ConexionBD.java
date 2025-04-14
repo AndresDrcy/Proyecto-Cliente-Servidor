@@ -51,6 +51,7 @@ public class ConexionBD {
             if (resultado != null) resultado.close();
             if (consulta != null) consulta.close();
             if (conexion != null) conexion.close();
+            System.out.println("se cerro la base de datos");
         } catch (SQLException error) {
             error.printStackTrace();
         }

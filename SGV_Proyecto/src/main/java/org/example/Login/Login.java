@@ -21,7 +21,8 @@ public class Login extends JFrame {
         setContentPane(Login);
         setTitle("Login");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setSize(500, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 
         LoginBtn.addActionListener(new ActionListener() {
@@ -45,9 +46,12 @@ public class Login extends JFrame {
         SalirBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                System.exit(0);
             }
         });
+
+
+
     }
 
     public boolean esAutenticado() {

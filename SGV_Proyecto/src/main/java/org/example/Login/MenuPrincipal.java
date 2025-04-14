@@ -8,7 +8,6 @@ import org.example.Ventas.InterfazVentas;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MenuPrincipal extends JFrame {
 
@@ -18,6 +17,7 @@ public class MenuPrincipal extends JFrame {
     private JButton Ventabtn;
     private JLabel Menulbl;
     private JButton salirButton;
+    private JButton registroDeUsuariosSysButton;
 
     public MenuPrincipal() {
         new Servidor().start();
@@ -25,7 +25,8 @@ public class MenuPrincipal extends JFrame {
         setContentPane(panelMenuPrincipal);
         setTitle("Menu Principal"); //Nombre de la Ventana
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400,400); //Tamaño de la ventana
+        setSize(500,400); //Tamaño de la ventana
+        setLocationRelativeTo(null);
         setVisible(true);
 
     Clientesbtn.addActionListener(new ActionListener() {
@@ -54,7 +55,14 @@ public class MenuPrincipal extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            dispose();
+            System.exit(0);
+        }
+    });
+
+    registroDeUsuariosSysButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            RegistroUsuario registroUsuario = new RegistroUsuario();
         }
     });
 

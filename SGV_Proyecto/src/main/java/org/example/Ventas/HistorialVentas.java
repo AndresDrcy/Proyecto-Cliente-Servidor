@@ -17,9 +17,8 @@ public class HistorialVentas extends JFrame {
     public HistorialVentas() {
         setContentPane(mainPanel);
         setTitle("Historial de Ventas");
-        setSize(800, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         configurarTabla();
 

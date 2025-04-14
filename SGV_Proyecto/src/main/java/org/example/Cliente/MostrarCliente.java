@@ -20,9 +20,9 @@ public class MostrarCliente extends JFrame {
     public MostrarCliente() {
         setContentPane(InterfazMostrarCliente);
         setTitle("Clientes Actuales");
-        setSize(600, 400);
+        setSize(600, 600);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         crearTabla();
         cargarDatosDesdeBD();

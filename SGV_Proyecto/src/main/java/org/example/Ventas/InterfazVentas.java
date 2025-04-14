@@ -15,8 +15,9 @@ public class InterfazVentas extends JFrame {
     public InterfazVentas() {
         setContentPane(panelVentas);
         setTitle("Interfaz Ventas");
-        setSize(400, 400);
+        setSize(600, 400);
         setVisible(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         registrarVentaButton.addActionListener(new ActionListener() {

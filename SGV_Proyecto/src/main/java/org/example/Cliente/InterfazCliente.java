@@ -15,9 +15,9 @@ public class InterfazCliente extends JFrame {
     public InterfazCliente() {
         setContentPane(menuClientesPanel);
         setTitle("Menú de Clientes");
-        setSize(400, 400);
+        setSize(500, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         agregarClienteButton.addActionListener(new ActionListener() {
             @Override

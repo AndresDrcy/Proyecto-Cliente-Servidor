@@ -27,6 +27,7 @@ public class MostrarInventarios extends JFrame {
         setContentPane(InterfazInventario);
         setTitle("Inventario Actual");
         setSize(600, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 
         crearTabla();
@@ -46,7 +47,7 @@ public class MostrarInventarios extends JFrame {
                 if (filaSeleccionada != -1) {
                     int idVehiculo = (int) TablaInvent.getValueAt(filaSeleccionada, 0);
                     int confirmar = JOptionPane.showConfirmDialog(null,
-                            "Está seguro de eliminar este registro?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                            "Esta seguro de eliminar este registro?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
 
                     if (confirmar == JOptionPane.YES_OPTION) {
                         inventario.eliminarVehiculo(idVehiculo);

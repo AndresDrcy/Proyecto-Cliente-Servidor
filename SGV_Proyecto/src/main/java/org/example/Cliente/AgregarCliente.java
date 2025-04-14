@@ -19,9 +19,10 @@ public class AgregarCliente extends JFrame {
     public AgregarCliente() {
         setContentPane(panel);
         setTitle("Agregar Cliente");
-        setSize(400, 400);
+        setSize(500, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
         agregarRegistroButton.addActionListener(new ActionListener() {
             @Override

@@ -19,8 +19,8 @@ public class RegistroVentas extends JFrame {
     public RegistroVentas() {
         setContentPane(panelVenta);
         setTitle("Registro de Ventas");
-        setSize(400, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 
         registrarVentaButton.addActionListener(new ActionListener() {
