@@ -20,6 +20,7 @@
         </constraints>
         <properties>
           <font name="Consolas" size="18"/>
+          <foreground color="-65547"/>
           <text value="Menu de Ventas"/>
         </properties>
       </component>

@@ -55,6 +55,7 @@ CREATE TABLE SGV_Proyecto.at_inventarios_respaldo (
 -- tabla para los usuarios del sistema
 CREATE TABLE SGV_Proyecto.at_usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    codigoUsuario VARCHAR(50) NOT NULL UNIQUE,
     usuario VARCHAR(50) NOT NULL UNIQUE,
     contrasena VARCHAR(100) NOT NULL,
     rol VARCHAR(20) DEFAULT 'usuario'
@@ -63,9 +64,9 @@ CREATE TABLE SGV_Proyecto.at_usuarios (
 -- inserts de prueba para usuarios
 INSERT INTO SGV_Proyecto.at_usuarios (usuario, contrasena, rol)
 VALUES 
-('ventas1', '1234', 'vendedor'),
-('admin', 'admin123', 'administrador'),
-('ventas2', '4567', 'vendedor');
+('US-350D9852', 'ventas1', '1234', 'vendedor'),
+('US-250A1252','admin', 'admin123', 'administrador'),
+('US-996C3652','ventas2', '4567', 'vendedor');
 
 
 -- inserts de prueba para inventarios

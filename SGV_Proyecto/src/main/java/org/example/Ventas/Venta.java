@@ -2,6 +2,7 @@ package org.example.Ventas;
 
 import org.example.ConexionBD;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +26,22 @@ public class Venta {
 
     private String generarNumeroVoucher() {
         return "VCH-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    }
+
+    public static void eliminarVenta(String voucher) {
+        ConexionBD conexion = new ConexionBD();
+        conexion.setConexion();
+
+        try {
+            conexion.setConsulta("DELETE FROM at_ventas WHERE numero_voucher = ?");
+            conexion.getConsulta().setString(1, voucher);
+            conexion.getConsulta().executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el registro");
+        } finally {
+            conexion.cerrarConexion();
+        }
     }
 
     public boolean registrarEnBaseDeDatos() {
@@ -68,6 +85,27 @@ public class Venta {
         } catch (SQLException e) {
             System.out.println("Error al registrar venta: " + e.getMessage());
             return false;
+        } finally {
+            conexion.cerrarConexion();
+        }
+    }
+
+    public static void editarVenta(String voucherActual, String nuevoCliente, String nuevoVehiculo, double nuevoMonto, String nuevoTipo) {
+        ConexionBD conexion = new ConexionBD();
+        conexion.setConexion();
+
+        try {
+            conexion.setConsulta("UPDATE at_ventas SET documento_cliente = ?, codigo_vehiculo = ?, monto_total = ?, termino_pago = ?  WHERE numero_voucher = ?");
+            PreparedStatement resultadoActualizar = conexion.getConsulta();
+            resultadoActualizar.setString(1, nuevoCliente);
+            resultadoActualizar.setString(2, nuevoVehiculo);
+            resultadoActualizar.setDouble(3, nuevoMonto);
+            resultadoActualizar.setString(4, nuevoTipo);
+            resultadoActualizar.setString(5,voucherActual);
+            resultadoActualizar.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Venta actualizada correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al editar la venta");
         } finally {
             conexion.cerrarConexion();
         }
